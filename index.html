@@ -3,88 +3,17 @@
   <head>
     <title>Robert Anderson dot com dot au</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="manifest" href="site.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
-    <link rel="manifest" href="site.webmanifest" />
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        background: #00ffd4;
-        display: flex;
-        font-family: "DM Sans", sans-serif;
-      }
-
-      @media screen and (min-width: 600px) {
-        main {
-          display: flex;
-        }
-      }
-
-      h1 {
-        font-size: max(4.5rem, 13vw);
-        font-weight: 700;
-        line-height: 0.9;
-        margin: 4px;
-        text-transform: lowercase;
-      }
-
-      .buttons {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .button {
-        background: #d400ff;
-        color: #ffd400;
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin: 4px;
-        padding: 8px;
-        text-align: center;
-        text-decoration: none;
-        text-transform: lowercase;
-        border: 0;
-        cursor: pointer;
-      }
-
-      .button:active {
-        background: #ffd400;
-        color: #d400ff;
-      }
-
-      @keyframes disassociate {
-        from {
-          transform: translateX(0px);
-        }
-        25% {
-          transform: translateX(2px);
-        }
-        50% {
-          transform: translateX(0px);
-        }
-        75% {
-          transform: translateX(-2px);
-        }
-        to {
-          transform: translateX(0px);
-        }
-      }
-
-      .disassociate {
-        animation: disassociate 16ms linear infinite;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <canvas id="stripes" width="200" height="1000"></canvas>
@@ -95,79 +24,6 @@
         <button id="do-not-press" class="button">Do not press</button>
       </div>
     </main>
-    <script>
-      const GAP_HEIGHT = 60;
-      const STRIPE_HEIGHT = 60;
-      const GAP_FILL = "#d400ff";
-      const STRIPE_FILL = "#ffd400";
-      const MIN_SPEED = 10;
-      const MAX_SPEED = 100;
-      const CRAZY_SPEED = 1000;
-
-      const canvas = document.getElementById("stripes");
-      const ctx = canvas.getContext("2d");
-
-      let speed = MIN_SPEED;
-      let prevTime = Date.now();
-      let offset = 0;
-      let isDisassociated = false;
-
-      function setSize() {
-        const isMobile = window.innerWidth < 600;
-        canvas.width = window.innerWidth * (isMobile ? 0.1 : 0.25);
-        canvas.height = window.innerHeight;
-      }
-      setSize();
-      window.addEventListener("resize", setSize);
-
-      function setSpeed(event) {
-        speed =
-          (event.clientX / window.innerWidth) * (MAX_SPEED - MIN_SPEED) +
-          MIN_SPEED;
-      }
-      document.addEventListener("mousemove", setSpeed);
-
-      function paint() {
-        const time = Date.now();
-        const delta = (time - prevTime) / 1000;
-        prevTime = time;
-
-        offset += speed * delta;
-        offset = offset % (GAP_HEIGHT + STRIPE_HEIGHT);
-
-        const numStripes = Math.ceil(
-          canvas.height / (GAP_HEIGHT + STRIPE_HEIGHT)
-        );
-        for (let i = -1; i < numStripes; i++) {
-          const y = i * (GAP_HEIGHT + STRIPE_HEIGHT) + offset;
-          ctx.fillStyle = STRIPE_FILL;
-          ctx.fillRect(0, y, canvas.width, STRIPE_HEIGHT);
-          ctx.fillStyle = GAP_FILL;
-          ctx.fillRect(0, y + STRIPE_HEIGHT, canvas.height, GAP_HEIGHT);
-        }
-
-        requestAnimationFrame(paint);
-      }
-      requestAnimationFrame(paint);
-
-      function disassociate() {
-        document.removeEventListener("mousemove", setSpeed);
-        speed = CRAZY_SPEED;
-        document.querySelectorAll("*").forEach((element) => {
-          element.classList.add("disassociate");
-        });
-      }
-      function reassociate() {
-        document.addEventListener("mousemove", setSpeed);
-        speed = MIN_SPEED;
-        document.querySelectorAll(".disassociate").forEach((element) => {
-          element.classList.remove("disassociate");
-        });
-      }
-      document.getElementById("do-not-press").addEventListener("click", () => {
-        isDisassociated = !isDisassociated;
-        isDisassociated ? disassociate() : reassociate();
-      });
-    </script>
+    <script type="module" src="main.js"></script>
   </body>
 </html>

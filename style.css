@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #00ffd4;
+  display: flex;
+  font-family: "DM Sans", sans-serif;
+}
+
+@media screen and (min-width: 600px) {
+  main {
+    display: flex;
+  }
+}
+
+h1 {
+  font-size: max(4.5rem, 13vw);
+  font-weight: 700;
+  line-height: 0.9;
+  margin: 4px;
+  text-transform: lowercase;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  background: #d400ff;
+  color: #ffd400;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 4px;
+  padding: 8px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: lowercase;
+  border: 0;
+  cursor: pointer;
+}
+
+.button:active {
+  background: #ffd400;
+  color: #d400ff;
+}
+
+@keyframes disassociate {
+  from {
+    transform: translateX(0px);
+  }
+  25% {
+    transform: translateX(2px);
+  }
+  50% {
+    transform: translateX(0px);
+  }
+  75% {
+    transform: translateX(-2px);
+  }
+  to {
+    transform: translateX(0px);
+  }
+}
+
+.disassociate {
+  animation: disassociate 16ms linear infinite;
+}
