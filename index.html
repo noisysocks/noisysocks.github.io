@@ -32,7 +32,7 @@
       }
 
       h1 {
-        font-size: clamp(3rem, 14vw - 0.4rem, 13rem);
+        font-size: max(4.5rem, 13vw);
         font-weight: 700;
         line-height: 0.9;
         margin: 4px;
@@ -113,7 +113,8 @@
       let isDisassociated = false;
 
       function setSize() {
-        canvas.width = window.innerWidth * 0.25;
+        const isMobile = window.innerWidth < 600;
+        canvas.width = window.innerWidth * (isMobile ? 0.1 : 0.25);
         canvas.height = window.innerHeight;
       }
       setSize();
