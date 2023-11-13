@@ -9,6 +9,10 @@ body {
   font-family: "DM Sans", sans-serif;
 }
 
+main {
+  border-left: 3px solid #000000;
+}
+
 @media screen and (min-width: 600px) {
   main {
     display: flex;
@@ -40,6 +44,8 @@ h1 {
   text-transform: lowercase;
   border: 0;
   cursor: pointer;
+  border: 3px solid #000000;
+  border-radius: 10px;
 }
 
 .button:active {
